@@ -48,7 +48,15 @@ def ExtractingParsedFiles(path):
         characterCoord = parse_xml(xml_file)
         length = len(characterCoord)
         characterCoord = np.array(characterCoord).reshape(1, length)
-        dataframe = pd.concat([dataframe,pd.DataFrame(characterCoord)]) 
+        dataframe = pd.concat([dataframe, pd.DataFrame(characterCoord)])
+
+    numcols = len(dataframe.columns)
+    col_names = ["plate", "filename"]
+    for i in range(1, (numcols // 2)):
+        col_names.append(f"char{i-1}")
+        col_names.append(f"coord{i-1}")
+    dataframe.columns = col_names
+
     return dataframe
 
 def ExtractAndSave(path, save_path): 
